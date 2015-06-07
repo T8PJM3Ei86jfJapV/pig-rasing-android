@@ -12,6 +12,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
@@ -33,7 +34,7 @@ import android.widget.TextView;
 
 public class LoginActivity extends Activity {
 
-	private final String URL = "http://2.lrsim.sinaapp.com/login";
+	private final String URL = "http://2.lrsim.vipsinaapp.com/login";
 	private boolean auth = false;
 
 	private TextView editTxtUsr, editTxtPsw;
@@ -89,7 +90,7 @@ public class LoginActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			Intent intent = new Intent(LoginActivity.this, WebActivity.class);
-			intent.putExtra("link", "http://2.lrsim.sinaapp.com/register");
+			intent.putExtra("link", "http://2.lrsim.vipsinaapp.com/register");
 			startActivity(intent);
 		}
 
@@ -149,6 +150,7 @@ public class LoginActivity extends Activity {
 		}
 	};
 
+	@SuppressLint("HandlerLeak")
 	Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			if (msg.what == 1) {
