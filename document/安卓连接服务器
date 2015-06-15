@@ -1,0 +1,162 @@
+在开发Android项目的时候需要连接各种类型的服务器：J2EE、Webservice、Socket,各种方法如下:
+url方法:
+public class MyURLActivity extends Activity {
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		Thread thread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				URL url;
+				String temp;
+				StringBuffer sb = new StringBuffer();
+				try {
+					url = new URL("http://192.168.18.157?name=allen");// 根据自己的服务器地址填写
+					BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));// 获取输入流
+					while ((temp = in.readLine()) != null) {
+						sb.append(temp);
+					}
+					System.out.println(sb.toString());
+					in.close();
+				} catch (MalformedURLException me) {
+					System.err.println("你输入的URL格式有问题！");
+					me.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		thread.start();
+	}
+}
+
+httpclient方法:
+public class MyHttpClientActivity extends Activity {
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		Thread thread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				HttpClient client = new DefaultHttpClient();
+				HttpGet httpGet = new HttpGet("http://192.168.18.157?name=allen");// 根据自己的服务器地址填写
+				try {
+					HttpResponse response = client.execute(httpGet);
+					String temp;
+					StringBuffer sb = new StringBuffer();
+					BufferedReader in = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));// 获取输入流
+					while ((temp = in.readLine()) != null) {
+						sb.append(temp);
+					}
+					System.out.println(sb.toString());
+					in.close();
+				} catch (ClientProtocolException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		thread.start();
+	}
+}
+
+HttpURLConnection方法：
+public class MyHttpURLConnectionActivity extends Activity {
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		Thread thread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				BufferedReader bufferedReader = null;
+				try {
+					URL url = new URL("http://192.168.18.157");// 根据自己的服务器地址填写
+					HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+					conn.setConnectTimeout(10000);
+					conn.setDoOutput(true);// 允许输出
+					conn.setRequestMethod("POST");
+					conn.setRequestProperty("Connection", "Keep-Alive");
+					conn.setRequestProperty("Charset", "GBK");
+					OutputStream os = conn.getOutputStream();
+					os.write("name=allen".getBytes());
+					if (conn.getResponseCode() == 200) {
+						System.out.println(conn.toString());
+						InputStream is = conn.getInputStream();
+						InputStreamReader isr = new InputStreamReader(is, "GBK");
+						bufferedReader = new BufferedReader(isr);
+					}
+					String result = "";
+					String line = "";
+					if (bufferedReader != null) {
+						try {
+							while ((line = bufferedReader.readLine()) != null) {
+								result += line;
+							}
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+					System.out.println(result);
+				} catch (MalformedURLException e) {
+					// URL格式错误
+					e.printStackTrace();
+				} catch (UnsupportedEncodingException e) {
+					// 不支持你设置的编码
+					e.printStackTrace();
+				} catch (ProtocolException e) {
+					// 请求方式不支持
+					e.printStackTrace();
+				} catch (IOException e) {
+					// 输入输出通讯出错
+					e.printStackTrace();
+				}
+			}
+		});
+		thread.start();
+	}
+}
+
+ksoap2方法：
+public class MyKsoap2Activity extends Activity {
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		Thread thread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				String URL = "http://cjf780426.xicp.net:803/Demo/DEMO1/GBSvr.dll/soap/IGBSvr";
+				String NAMESPACE = "http://tempuri.org/";
+				SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+				envelope.dotNet = true;
+				HttpTransportSE ht = new HttpTransportSE(URL);
+				ht.debug = true;
+				String METHOD_NAME = "GBlogin";
+				String SOAP_ACTION = "urn:GBSvrIntf-IGBSvr#GBlogin";
+				SoapObject rpc = new SoapObject(NAMESPACE, METHOD_NAME);
+				rpc.addProperty("UserName", "AllenSTU");
+				rpc.addProperty("UserPWD", "AllenSTU");
+				envelope.bodyOut = rpc;
+				envelope.setOutputSoapObject(rpc);
+				try {
+					ht.call(SOAP_ACTION, envelope);
+					System.out.println((String) envelope.getResponse());
+				} catch (SoapFault e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (XmlPullParserException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		thread.start();
+	}
+}
+
