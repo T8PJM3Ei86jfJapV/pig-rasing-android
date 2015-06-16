@@ -1,0 +1,49 @@
+from bottle import Bottle, run
+import MySQLdb
+import sae
+import sae.const
+
+app = Bottle()
+
+@app.route('/')
+def hello():
+  return "Hello, world! - Bottle"
+
+@app.route('/register', method = 'POST')
+def register():
+  data = request.POST
+  con = MySQLdb.connect(user=sae.const.MYSQL_USER,\
+    db=sae.const.MYSQL_DB,\
+    passwd=sae.const.MYSQL_PASS,\
+    host=sae.const.MYSQL_HOST)
+  cur = con.cursor()
+  cur.execute('select * from users where id = %s' % (data.id))
+  re = cur.fetchall()
+  if len(re) < 1:
+    cur.execute('insert into users(id,pw) values(%s,%s)' % (data.id,data.pw))
+    con.commit()
+    con.close()
+    return {'status':'success', 'msg':'register success'}
+  else:
+    con.close()
+    return {'status':'fail', 'msg':'id exit'}
+
+@app.route('/login', method = 'POST')
+def login():
+  data = request.POST
+  con = MySQLdb.connect(user=sae.const.MYSQL_USER,\
+    db=sae.const.MYSQL_DB,\
+    passwd=sae.const.MYSQL_PASS,\
+    host=sae.const.MYSQL_HOST)
+  cur = con.cursor()
+  cur.execute('select * from users where id = %s' % (data.id))
+  re = cur.fetchall()
+  con.close()
+  if len(re) < 1:
+    return {'status':'fail', 'msg':'user not find'}
+  if re[0].pw == data.pw:
+    return {'status':'success', 'msg':'login succeed'}
+  else:
+    return {'status':'fail', 'msg':'password error'}
+
+application = sae.create_wsgi_app(app)
