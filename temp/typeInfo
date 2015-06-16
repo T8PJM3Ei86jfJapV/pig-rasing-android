@@ -1,0 +1,22 @@
+import sys
+from operator import add
+ 
+def mapper(line):
+    #<date_time> <project_code> <page_title> <num_hits> <page_size>
+    tuples = line.split()
+    project_code=tuples[1]
+    page_title=tuples[2]
+    num_hits=tuples[3]
+    return (project_code+"\t"+page_title, int(num_hits))
+ 
+def mapper2(x):
+    return (x[1],x[0])
+ 
+def main(RDDs):
+    full_rdd = RDDs[0]
+    for rdd in RDDs[1:]:
+        full_rdd = full_rdd.union(rdd)
+    page_to_count = full_rdd.map(mapper).reduceByKey(add)
+    count_to_page = page_to_count.map(mapper2).sortByKey(False)
+    for t in count_to_page.take(10):
+        print t[1]+"\t"+str(t[0])
