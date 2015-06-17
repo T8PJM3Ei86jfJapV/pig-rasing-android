@@ -33,6 +33,13 @@
         </activity>
         <activity android:name=".WebActivity" >
         </activity>
+        <activity
+            android:name=".NotificationView"
+            android:label="Details of notification" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
     </application>
 
 </manifest>

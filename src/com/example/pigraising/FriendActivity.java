@@ -48,22 +48,34 @@ public class FriendActivity extends Activity {
 	private void initData() {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("username", "王尔德");
-		map.put("pignum", "12");
+		map.put("pignum", "1");
 		map.put("rate", "4");
 		dataList.add(map);
 
 		map = new HashMap<String, String>();
 		map.put("username", "王叔叔");
-		map.put("pignum", "6");
+		map.put("pignum", "3");
 		map.put("rate", "3");
 		dataList.add(map);
 		
 		map = new HashMap<String, String>();
-		map.put("username", "王尼玛");
-		map.put("pignum", "34");
+		map.put("username", "王阿姨");
+		map.put("pignum", "2");
 		map.put("rate", "1");
 		dataList.add(map);
+		
+		map = new HashMap<String, String>();
+		map.put("username", "王奶奶");
+		map.put("pignum", "2");
+		map.put("rate", "5");
+		dataList.add(map);
 
+		map = new HashMap<String, String>();
+		map.put("username", "王尼玛");
+		map.put("pignum", "4");
+		map.put("rate", "1");
+		dataList.add(map);
+		
 		map = new HashMap<String, String>();
 		map.put("username", "王阿玛");
 		map.put("pignum", "5");
@@ -72,10 +84,28 @@ public class FriendActivity extends Activity {
 
 		map = new HashMap<String, String>();
 		map.put("username", "隔壁老王");
-		map.put("pignum", "6");
+		map.put("pignum", "0");
+		map.put("rate", "2");
+		dataList.add(map);
+
+		map = new HashMap<String, String>();
+		map.put("username", "老王妹子");
+		map.put("pignum", "1");
+		map.put("rate", "4");
+		dataList.add(map);
+		
+		map = new HashMap<String, String>();
+		map.put("username", "老王儿子");
+		map.put("pignum", "2");
 		map.put("rate", "6");
 		dataList.add(map);
 
+		map = new HashMap<String, String>();
+		map.put("username", "老王孙子");
+		map.put("pignum", "3");
+		map.put("rate", "1");
+		dataList.add(map);
+		
 		adapter = new SimpleAdapter(this, dataList, R.layout.list_item,
 				new String[] { "username", "pignum", "rate" }, new int[] {
 						R.id.list_item_username, R.id.list_item_pignum, R.id.list_item_rate }) {
@@ -98,6 +128,7 @@ public class FriendActivity extends Activity {
 						bundle.putString("username", username);
 						bundle.putString("pignum", pignum);
 						bundle.putString("rate", rate);
+						bundle.putBoolean("self", false);
 
 						Intent in = new Intent();
 						in.setClass(FriendActivity.this, AccountActivity.class);

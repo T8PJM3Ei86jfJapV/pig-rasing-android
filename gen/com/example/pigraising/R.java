@@ -83,26 +83,27 @@ public final class R {
         public static final int top_rightbtn_pressed=0x7f020037;
     }
     public static final class id {
-        public static final int action_account=0x7f080022;
-        public static final int action_friend=0x7f080021;
-        public static final int action_logout=0x7f080023;
-        public static final int back=0x7f080019;
-        public static final int btn_login=0x7f080016;
-        public static final int btn_register=0x7f080018;
-        public static final int checkbox_rem=0x7f080017;
-        public static final int et_password=0x7f080015;
-        public static final int et_username=0x7f080014;
-        public static final int imageButton1=0x7f08001d;
-        public static final int image_logo=0x7f080011;
+        public static final int action_account=0x7f080025;
+        public static final int action_friend=0x7f080024;
+        public static final int action_logout=0x7f080026;
+        public static final int back=0x7f08001c;
+        public static final int btn_login=0x7f080017;
+        public static final int btn_register=0x7f080019;
+        public static final int button1=0x7f080010;
+        public static final int checkbox_rem=0x7f080018;
+        public static final int et_password=0x7f080016;
+        public static final int et_username=0x7f080015;
+        public static final int imageButton1=0x7f080020;
+        public static final int image_logo=0x7f080012;
         public static final int iv_profile_avartar=0x7f080005;
         public static final int iv_profile_bg=0x7f080000;
-        public static final int linearLayout1=0x7f080012;
-        public static final int linearLayout2=0x7f080013;
-        public static final int linear_layout_item=0x7f08001c;
-        public static final int listView1=0x7f080010;
-        public static final int list_item_pignum=0x7f08001f;
-        public static final int list_item_rate=0x7f080020;
-        public static final int list_item_username=0x7f08001e;
+        public static final int linearLayout1=0x7f080013;
+        public static final int linearLayout2=0x7f080014;
+        public static final int linear_layout_item=0x7f08001f;
+        public static final int listView1=0x7f080011;
+        public static final int list_item_pignum=0x7f080022;
+        public static final int list_item_rate=0x7f080023;
+        public static final int list_item_username=0x7f080021;
         public static final int ll_profile_bg=0x7f080003;
         public static final int rl_profile1=0x7f080002;
         public static final int rl_profile2=0x7f080006;
@@ -111,14 +112,16 @@ public final class R {
         public static final int textView3=0x7f08000a;
         public static final int textView5=0x7f08000c;
         public static final int textView7=0x7f08000e;
+        public static final int tvRate=0x7f08001a;
+        public static final int tvUptime=0x7f08001b;
         public static final int tv_description=0x7f08000f;
         public static final int tv_pignum=0x7f08000d;
         public static final int tv_profile_uname=0x7f080007;
         public static final int tv_rate=0x7f08000b;
         public static final int tv_username=0x7f080009;
         public static final int v_profile_hearbottom=0x7f080004;
-        public static final int webView1=0x7f08001a;
-        public static final int webprogressBar=0x7f08001b;
+        public static final int webView1=0x7f08001d;
+        public static final int webprogressBar=0x7f08001e;
     }
     public static final class layout {
         public static final int activity_account=0x7f030000;
@@ -127,6 +130,7 @@ public final class R {
         public static final int activity_main=0x7f030003;
         public static final int activity_web=0x7f030004;
         public static final int list_item=0x7f030005;
+        public static final int notification=0x7f030006;
     }
     public static final class menu {
         public static final int main=0x7f070000;

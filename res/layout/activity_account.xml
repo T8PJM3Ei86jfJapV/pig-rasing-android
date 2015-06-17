@@ -192,6 +192,21 @@
                             android:layout_height="wrap_content"
                             android:text="请你不要再迷恋哥，哥只是个传说。" />
                     </LinearLayout>
+
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="3dp"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp" />
+
+                    <Button
+                        android:id="@+id/button1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.60"
+                        android:layout_marginLeft="64dp"
+                        android:layout_marginRight="64dp"
+                        android:text="给TA塞猪" />
                 </LinearLayout>
             </RelativeLayout>
 

@@ -2,6 +2,9 @@ package com.example.pigraising;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,11 +13,15 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
 	private Context context;
 	private SharedPreferences sp;
+
+	private int rate;
+	private int pignum;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +46,30 @@ public class MainActivity extends Activity {
 	}
 	
 	private void makeView() {
+		// 处理工具栏
 		ActionBar actionBar = getActionBar();
-		actionBar.setTitle("天天养猪"); 
+		actionBar.setTitle("一起来养猪"); 
+		
+		int total = sp.getInt("TOTAL", 2);
+		rate = total / 5;
+		pignum = (total % 5) + 1;
+		
+		// 显示用户等级
+		TextView tvRate = (TextView) findViewById(R.id.tvRate);
+		tvRate.setText(String.valueOf(rate));
+		
+		// 获取待机时间
+		Long uptime = android.os.SystemClock.uptimeMillis() / 1000; //转为秒
+		String hour = String.valueOf(uptime / 3600).concat("小时");
+		String min = String.valueOf((uptime % 3600) / 60).concat("分钟");
+		
+		// 显示待机时间
+		TextView tvUptime = (TextView) findViewById(R.id.tvUptime);
+		String upinfo = hour + min;
+		tvUptime.setText(upinfo);
+		
+		// 显示通知
+		Notify("一起来养猪", "最近狂玩手机，您已获得“养猪专业户”称号");
 	}
 	
     @Override  
@@ -58,17 +87,14 @@ public class MainActivity extends Activity {
 		    startActivity(intent);
 			return true;
 		}
+
 		if (id == R.id.action_account) {
-			
-			int total = sp.getInt("TOTAL", 2);
-			int rate = total / 5;
-			int pignum = (total % 5) + 1;
-			
 			
 		    Bundle bundle = new Bundle();
 		    bundle.putString("username", sp.getString("USERNAME", ""));
 		    bundle.putString("rate", String.valueOf(rate));
 		    bundle.putString("pignum", String.valueOf(pignum));
+		    bundle.putBoolean("self", true);
 
 		    Intent intent = new Intent(MainActivity.this, AccountActivity.class);
 		    intent.putExtras(bundle);
@@ -85,4 +111,17 @@ public class MainActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
+	private void Notify(String notificationTitle, String notificationMessage) {
+	      NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+	      @SuppressWarnings("deprecation")
+	      
+	      Notification notification = new Notification(R.drawable.ic_launcher,"New Message", System.currentTimeMillis());
+	      Intent notificationIntent = new Intent(this,NotificationView.class);
+	      PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,notificationIntent, 0);
+	      
+	      notification.setLatestEventInfo(MainActivity.this, notificationTitle,notificationMessage, pendingIntent);
+	      notificationManager.notify(9999, notification);
+	   }
+	
 }
